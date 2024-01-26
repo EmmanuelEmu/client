@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import image from "../login/images/metro-login.webp";
 import google from "../login/images/google.svg";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 const Login = () => {
   useEffect(() => {
@@ -10,8 +11,26 @@ const Login = () => {
       .catch((error) => console.error(error));
   }, []);
 
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [login, setLogin] = useState(false);
   const [registration, setRegistration] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const handleEmail = (event)=>{
+    setEmail(event.target.value);
+  }
+
+  const handlePassword = (event)=>{
+    setPassword(event.target.value);
+  }
+
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handhleLogin = async () => {
     // setLogin(!login);
@@ -42,6 +61,7 @@ const Login = () => {
               <span class="mb-2 text-md ">Email</span>
               <input
                 type="text"
+                value={email}
                 class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
                 name="email"
                 id="email"
@@ -49,12 +69,23 @@ const Login = () => {
             </div>
             <div class="py-4">
               <span class="mb-2 text-md">Password</span>
+              <div className="relative">
               <input
-                type="password"
-                name="pass"
-                id="pass"
-                class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-              />
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    // value={password}
+                    // onChange={handlePasswordChange}
+                    class="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2"
+                  >
+                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                  </button>
+              </div>
             </div>
             <div class="flex justify-between w-full py-4">
               <div class="mr-24">
